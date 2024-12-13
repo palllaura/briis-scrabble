@@ -1,6 +1,10 @@
 package com.smit.briis.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Word {
@@ -15,7 +19,7 @@ public class Word {
         this.value = value;
     }
 
-    public Word() {
+    protected Word() {
 
     }
 }

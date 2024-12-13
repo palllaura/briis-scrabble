@@ -1,7 +1,8 @@
 package com.smit.briis;
 
-import com.smit.briis.entity.Word;
-import com.smit.briis.repository.WordRepository;
+import com.smit.briis.service.WordService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,28 +15,21 @@ import java.util.stream.Stream;
 @SpringBootApplication
 public class BriisApplication {
 
+	private static final Logger logger = LoggerFactory.getLogger(BriisApplication.class);
+
 	public static void main(String[] args) {
 		SpringApplication.run(BriisApplication.class, args);
+		logger.info("BriisApplication started successfully.");
 	}
 
-
 	@Bean
-	CommandLineRunner initDatabase(WordRepository repository) {
+	CommandLineRunner initDatabase(WordService wordService) {
 		return args -> {
 			try (Stream<String> lines = Files.lines(new ClassPathResource("data/dictionary.txt").getFile().toPath())) {
-				lines.forEach(word -> {
-					try {
-						repository.save(new Word(word.trim()));
-						System.out.println("Saved word: " + word.trim());
-					} catch (Exception e) {
-						System.err.println("Failed to save word: " + word.trim() + " - " + e.getMessage());
-					}
-				});
+				lines.forEach(wordService::saveWordIfNotExists);
 			} catch (Exception e) {
-				System.err.println("Error reading word collection: " + e.getMessage());
+				logger.error("Error reading dictionary: {}", e.getMessage(), e);
 			}
 		};
 	}
 }
-
-
