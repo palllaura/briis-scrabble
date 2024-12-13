@@ -33,3 +33,8 @@ A web-based Scrabble scoring and validation tool that checks if a word is valid 
 3. #### Start the development server:
    ```bash
    npm run serve
+
+### Screenshot
+
+<img width="715" alt="Screenshot 2024-12-13 at 15 24 00" src="https://github.com/user-attachments/assets/22e21959-a871-4dcb-b98a-843d48019cb2" />
+
